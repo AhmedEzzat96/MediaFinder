@@ -1,9 +1,19 @@
-//
-//  Users.swift
-//  MediaFinder
-//
-//  Created by Ahmed Ezzat on 2/26/20.
-//  Copyright © 2020 Ahmed Ezzat. All rights reserved.
-//
-
 import Foundation
+import UIKit
+
+enum Gender: String {
+    case Male = "Male"
+    case Female = "Female"
+}
+
+struct Users {
+    
+    var name: String!
+    var email: String!
+    var password: String!
+    var contactNum: String!
+    var gender: String!
+    var address: String!
+    var image: Data!
+    
+}

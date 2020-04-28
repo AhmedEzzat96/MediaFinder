@@ -1,30 +1,54 @@
-//
-//  ProfileVC.swift
-//  MediaFinder
-//
-//  Created by Ahmed Ezzat on 2/26/20.
-//  Copyright © 2020 Ahmed Ezzat. All rights reserved.
-//
-
 import UIKit
 
 class ProfileVC: UIViewController {
-
+    
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var contactNumLabel: UILabel!
+    @IBOutlet weak var genderLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    let database = DatabaseManager.shared()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.navigationItem.hidesBackButton = false
+        getUserData()
+        circularImageView(image: profileImageView)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func circularImageView(image: UIImageView) {
+        image.layer.masksToBounds = true
+        image.layer.cornerRadius = image.bounds.width / 2
     }
-    */
-
+    
+    private func getUserData() {
+        let user = database.getUserData()
+        if let imageData = user?.image {
+            profileImageView.image = UIImage(data: imageData)
+        }
+        nameLabel.text = user?.name
+        emailLabel.text = user?.email
+        genderLabel.text = user?.gender
+        addressLabel.text = user?.address
+        contactNumLabel.text = user?.contactNum
+    }
+    
+    private func goToSignInVC() {
+        let signInVC = UIStoryboard.init(name: Storyboards.main, bundle: nil).instantiateViewController(withIdentifier: "SignInVC") as! SignInVC
+        self.navigationController?.pushViewController(signInVC, animated: true)
+    }
+    
+    @IBAction func logOutBtnPressed(_ sender: UIButton) {
+        goToSignInVC()
+        UserDefaultsManager.shared().isLoggedIn = false
+        hideTabBar()
+    }
+    
+    private func hideTabBar() {
+        self.tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.isTranslucent = true
+    }
 }

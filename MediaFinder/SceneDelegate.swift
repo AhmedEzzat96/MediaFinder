@@ -1,24 +1,34 @@
-//
-//  SceneDelegate.swift
-//  MediaFinder
-//
-//  Created by Ahmed Ezzat on 2/26/20.
-//  Copyright © 2020 Ahmed Ezzat. All rights reserved.
-//
-
 import UIKit
+import IQKeyboardManagerSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    let database = DatabaseManager.shared()
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
-    }
+        database.DbConnection()
+        IQKeyboardManager.shared.enable = true
+        
+        let signUpVC = UIStoryboard.init(name: Storyboards.main, bundle: nil).instantiateViewController(withIdentifier: VCs.signUpVC) as! SignUpVC
+        let signInVC = UIStoryboard.init(name: Storyboards.main, bundle: nil).instantiateViewController(withIdentifier: VCs.signInVC) as! SignInVC
+        
+        let navSignUp = UINavigationController(rootViewController: signUpVC)
+        let navSignIn = UINavigationController(rootViewController: signInVC)
+            
+        if database.isTableExists(table: database.userData) {
+                if UserDefaultsManager.shared().isLoggedIn == true {
+                    window?.rootViewController = TabBarVC()
+                } else {
+                    window?.rootViewController = navSignIn
+                }
+            } else {
+                    window?.rootViewController = navSignUp
+            }
+            UINavigationBar.appearance().shadowImage = UIImage()
+            UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
