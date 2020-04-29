@@ -102,8 +102,9 @@ class DatabaseManager {
     }
     
     func listUsersTable() {
+        guard let dataB = self.db else {return}
         do {
-            let userData = try self.db!.prepare(self.userData)
+            let userData = try dataB.prepare(self.userData)
             for data in userData {
                 print(data[id], data[name], data[email], data[password])
             }
@@ -113,8 +114,9 @@ class DatabaseManager {
     }
     
     func listCachDataTable() {
+        guard let dataB = self.db else {return}
         do {
-            let cachedData = try self.db!.prepare(self.cachedData)
+            let cachedData = try dataB.prepare(self.cachedData)
             for cachData in cachedData {
                 print(cachData[self.userid], cachData[self.text])
             }
@@ -124,8 +126,9 @@ class DatabaseManager {
     }
     
     func userExists(email: String, password: String) -> Bool {
+        guard let dataB = self.db else {return false}
         do {
-            let userData = try self.db!.prepare(self.userData)
+            let userData = try dataB.prepare(self.userData)
             for user in userData {
                 if email == user[self.email] && password == user[self.password] {
                     UserDefaults.standard.set(user[self.id], forKey: UserDefaultsKeys.id)
@@ -139,8 +142,9 @@ class DatabaseManager {
     }
     
     func emailNotExists(email: String) -> Bool {
+        guard let dataB = self.db else {return true}
         do {
-            let userData = try self.db!.prepare(self.userData)
+            let userData = try dataB.prepare(self.userData)
             for user in userData {
                 if email == user[self.email] {
                     return false
@@ -153,9 +157,10 @@ class DatabaseManager {
     }
     
     func getUserData() -> Users? {
+        guard let dataB = self.db else {return nil}
         do {
             let id = UserDefaults.standard.integer(forKey: UserDefaultsKeys.id)
-            let userData = try self.db!.prepare(self.userData)
+            let userData = try dataB.prepare(self.userData)
             for user in userData {
                 if id == user[self.id] {
                     
@@ -170,9 +175,10 @@ class DatabaseManager {
     }
     
     func insertUsers(user: Users) {
+        guard let dataB = self.db else {return}
         do {
             let insert = userData.insert(self.name <- user.name, self.email <- user.email, self.password <- user.password, self.contactNum <- user.contactNum, self.gender <- user.gender, self.address <- user.address, self.photo <- user.image)
-            try db!.run(insert)
+            try dataB.run(insert)
 
         } catch {
             print("Insert failed")
@@ -182,9 +188,10 @@ class DatabaseManager {
     
     func getCachedData() -> String {
         var cachedData = "Jack Johnson"
+        guard let dataB = self.db else {return cachedData}
         let id = UserDefaults.standard.integer(forKey: UserDefaultsKeys.id)
         do {
-            for cachData in try db!.prepare(self.cachedData) {
+            for cachData in try dataB.prepare(self.cachedData) {
                     if cachData[userid] == id {
                         cachedData = cachData[self.text]
                     }

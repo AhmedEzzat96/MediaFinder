@@ -45,26 +45,16 @@ class SignInVC: UIViewController {
     }
     
     private func isValidData() -> Bool {
-    if let email = emailTextField.text, !email.isEmpty, let password = passwordTextField.text, !password.isEmpty { if isValidEmail(email), isValidPassword(password) {
+        if let email = emailTextField.text, !email.isEmpty, let password = passwordTextField.text, !password.isEmpty { if email.isValidEmail, password.isValidPassword {
         return true
         }
             }
         return false
     }
     
-    private func isValidEmail(_ email: String) -> Bool {
-        let emailRegEx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{1,4}$"
-        let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
-        return emailTest.evaluate(with: email)
-    }
-    
-    private func isValidPassword(_ password: String) -> Bool {
-        let passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"
-        return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: password)
-    }
     
     @IBAction func lognInBtnPressed(_ sender: UIButton) {
-        if checkUser() && isValidData() {
+        if isValidData() && checkUser() {
             UserDefaultsManager.shared().isLoggedIn = true
             goToTabBar()
         } else {

@@ -8,6 +8,9 @@ class UserDefaultsManager {
         return UserDefaultsManager.sharedInstance
     }
     
+    private init() {
+        
+    }
     // MARK:- Properties
     var isLoggedIn: Bool {
         set{

@@ -42,15 +42,15 @@ class SignUpVC: UIViewController {
 
     private func isValidData() -> Bool {
         if let name = fullNameTextField.text, !name.isEmpty, let email = emailTextField.text, let address = locationLabel.text, !address.isEmpty, !email.isEmpty, let password = passwordTextField.text, !password.isEmpty, let contact = contactNumTextField.text, !contact.isEmpty, let image = profileImageView.image, image != UIImage(named: "reg") {
-            if isValidEmail(email), isValidPassword(password), contact.isPhoneNumber, database.emailNotExists(email: email) {
+            if email.isValidEmail, password.isValidPassword, contact.isPhoneNumber, database.emailNotExists(email: email) {
                 return true
             } else {
                 let alert = UIAlertController(title: "Fields Required!", message: "", preferredStyle: UIAlertController.Style.alert)
                 
-                if isValidEmail(email) == false {
+                if email.isValidEmail == false {
                     alert.message = "Your Email Address is wrong, please try again"
                 }
-                if isValidPassword(password) == false {
+                if password.isValidPassword == false {
                     alert.message = "Your password is wrong, please try again, your password at least 8 character & at least one letter "
                 }
                 if contact.isPhoneNumber == false {
@@ -87,17 +87,6 @@ class SignUpVC: UIViewController {
         self.navigationController?.pushViewController(signInVC, animated: true)
     }
     
-    private func isValidEmail(_ email: String) -> Bool {
-        let emailRegEx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{1,4}$"
-        let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
-        return emailTest.evaluate(with: email)
-    }
-    
-    private func isValidPassword(_ password: String) -> Bool {
-        let passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"
-        return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: password)
-    }
-    
     
     @IBAction func joinBtnPressed(_ sender: UIButton) {
         if isValidData() {
@@ -126,29 +115,8 @@ extension SignUpVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
         profileImageView.image = selectedImage
-        circularImageView(image: profileImageView)
+        profileImageView.circularImageView()
         dismiss(animated: true) {
-        }
-    }
-    
-     func circularImageView(image: UIImageView) {
-        image.layer.masksToBounds = true
-        image.layer.cornerRadius = image.bounds.width / 2
-    }
-}
-
-extension String {
-    var isPhoneNumber: Bool {
-        do {
-            let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.phoneNumber.rawValue)
-            let matches = detector.matches(in: self, options: [], range: NSMakeRange(0, self.count))
-            if let res = matches.first {
-                return res.resultType == .phoneNumber && res.range.location == 0 && res.range.length == self.count && self.count == 11
-            } else {
-                return false
-            }
-        } catch {
-            return false
         }
     }
 }
@@ -159,4 +127,3 @@ extension SignUpVC: SendingMessageDelegate{
         self.address = data
     }
 }
-

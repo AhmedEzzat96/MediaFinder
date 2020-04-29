@@ -16,12 +16,7 @@ class ProfileVC: UIViewController {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = false
         getUserData()
-        circularImageView(image: profileImageView)
-    }
-    
-    private func circularImageView(image: UIImageView) {
-        image.layer.masksToBounds = true
-        image.layer.cornerRadius = image.bounds.width / 2
+        profileImageView.circularImageView()
     }
     
     private func getUserData() {

@@ -70,7 +70,6 @@ extension MediaListVC: UITableViewDelegate, UITableViewDataSource {
         }
         cell.shadowAndBorderForCell(yourTableViewCell: cell)
         cell.configurecell(media: itunesArr[indexPath.row])
-        cell.indicator.startAnimating()
         return cell
     }
     func numberOfSections(in tableView: UITableView) -> Int {
