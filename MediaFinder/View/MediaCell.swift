@@ -1,7 +1,7 @@
 import UIKit
 import SDWebImage
 
-class TableViewCell: UITableViewCell {
+class MediaCell: UITableViewCell {
     @IBOutlet weak var artistImageView: UIImageView!
     @IBOutlet weak var artistNameOrTrackNameLabel: UILabel!
     @IBOutlet weak var longDescribtionOrArtistNameLabel: UILabel!
@@ -28,10 +28,10 @@ class TableViewCell: UITableViewCell {
         }
         artistImageView?.sd_setImage(with: URL(string: media.artworkUrl100), completed: nil)
     }
-    
     @IBAction func animationBtnPressed(_ sender: UIButton) {
         artistImageView?.shake()
     }
+    
 }
 
 

@@ -24,7 +24,7 @@ class MediaListVC: UIViewController {
         searchController.searchBar.placeholder = "Type something here to search"
         searchController.searchBar.scopeButtonTitles = ["All", "Music", "TvShow", "Movie"]
         navigationItem.searchController = searchController
-        tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "TableViewCell")
+        tableView.register(UINib(nibName: Cells.mediaCell, bundle: nil), forCellReuseIdentifier: Cells.mediaCell)
         tableView.dataSource = self
         tableView.delegate = self
         getData(search: database.getCachedData(), scope: "")
@@ -65,7 +65,7 @@ extension MediaListVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? TableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.mediaCell, for: indexPath) as? MediaCell else {
             return UITableViewCell()
         }
         cell.shadowAndBorderForCell(yourTableViewCell: cell)

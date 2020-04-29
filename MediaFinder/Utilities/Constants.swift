@@ -2,7 +2,7 @@ import Foundation
 
 // Cells
 struct Cells {
-    static let movieCell = "MoviesCell"
+    static let mediaCell = "MediaCell"
 }
 
 // Storyboards
