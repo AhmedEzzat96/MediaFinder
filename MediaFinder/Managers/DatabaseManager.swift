@@ -33,7 +33,6 @@ class DatabaseManager {
         }
     }
     
-    
     func createUsersTable() {
         if isTableExists(table: self.userData) == false {
         do {
@@ -58,7 +57,6 @@ class DatabaseManager {
     }
     
     func createCachDataTable() {
-    
     if isTableExists(table: cachedData) == false {
     do {
         try db?.run(cachedData.create { t in

@@ -15,24 +15,14 @@ class MediaListVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Media List"
         activityIndicator()
-        self.tableView.reloadData()
-        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        searchController.searchBar.delegate = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Type something here to search"
-        searchController.searchBar.scopeButtonTitles = ["All", "Music", "TvShow", "Movie"]
-        navigationItem.searchController = searchController
-        tableView.register(UINib(nibName: Cells.mediaCell, bundle: nil), forCellReuseIdentifier: Cells.mediaCell)
-        tableView.dataSource = self
-        tableView.delegate = self
+        tableViewConfiguration()
+        searchControllerConfiguration()
+        navControllerConfiguration()
         getData(search: database.getCachedData(), scope: "")
         self.showDetailViewController(playerViewController, sender: self)
         database.listUsersTable()
     }
-    
-    
     
     private func getData(search: String, scope: String) {
         indicator.startAnimating()
@@ -56,6 +46,27 @@ class MediaListVC: UIViewController {
             }
         }
     }
+    
+    private func searchControllerConfiguration() {
+        searchController.searchBar.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Type something here to search"
+        searchController.searchBar.scopeButtonTitles = ["All", "Music", "TvShow", "Movie"]
+    }
+    
+    private func tableViewConfiguration() {
+        tableView.register(UINib(nibName: Cells.mediaCell, bundle: nil), forCellReuseIdentifier: Cells.mediaCell)
+        tableView.dataSource = self
+        tableView.delegate = self
+        self.tableView.reloadData()
+        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+    }
+    
+    private func navControllerConfiguration() {
+        self.navigationItem.title = "Media List"
+        navigationItem.searchController = searchController
+    }
+    
 }
 
 extension MediaListVC: UITableViewDelegate, UITableViewDataSource {

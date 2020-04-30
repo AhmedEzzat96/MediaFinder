@@ -7,15 +7,8 @@ class SignInVC: UIViewController {
     @IBOutlet weak var logInBtn: UIButton!
     let database = DatabaseManager.shared()
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        logInBtn.isEnabled = true
-        logInBtn.isHighlighted = false
         self.navigationController?.isNavigationBarHidden = true
         database.listUsersTable()
         database.listCachDataTable()

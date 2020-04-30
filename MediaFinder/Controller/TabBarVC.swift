@@ -12,12 +12,10 @@ class TabBarVC: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUpTabBar()
     }
     
     func setUpTabBar() {
-        
         let mediaListVC = UIStoryboard(name: Storyboards.main, bundle: nil).instantiateViewController(withIdentifier: VCs.mediaListVC) as! MediaListVC
         let mediaListNav = UINavigationController(rootViewController: mediaListVC)
         let moviesIcon = UITabBarItem.init(title: "Media", image: UIImage(named: "movie"), tag: 0)

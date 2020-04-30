@@ -11,14 +11,9 @@ class SignUpVC: UIViewController {
     @IBOutlet weak var joinBtn: UIButton!
     @IBOutlet weak var genderSwitch: UISwitch!
     let database = DatabaseManager.shared()
-
     var gender: String = Gender.Male.rawValue
     var address: String!
     let imagePicker = UIImagePickerController()
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,8 +63,6 @@ class SignUpVC: UIViewController {
         return false
     }
 
-    
-    
     private func saveUser() {
         createDatabase()
         let user = Users(name: fullNameTextField.text!, email: emailTextField.text!, password: passwordTextField.text!, contactNum: contactNumTextField.text!, gender: self.gender , address: address, image: profileImageView.image?.pngData())
