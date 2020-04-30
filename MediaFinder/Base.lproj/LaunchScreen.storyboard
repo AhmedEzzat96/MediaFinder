@@ -16,14 +16,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iTunesArtwork" translatesAutoresizingMaskIntoConstraints="NO" id="pQv-Y6-cx2">
-                                <rect key="frame" x="0.0" y="5" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="-40" width="414" height="986"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="pQv-Y6-cx2" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="5g8-Qz-kSM"/>
                             <constraint firstItem="pQv-Y6-cx2" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Cbu-bP-RiL"/>
-                            <constraint firstItem="pQv-Y6-cx2" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" id="OLz-j2-Rsd"/>
+                            <constraint firstItem="pQv-Y6-cx2" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" multiplier="1.1" id="OLz-j2-Rsd"/>
                             <constraint firstItem="pQv-Y6-cx2" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Svi-SH-eev"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
